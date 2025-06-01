@@ -27,3 +27,61 @@ a.active hr{
         color: white;
     }
 }
+
+.fadein{
+    animation: fadein 0.5s linear;
+}
+
+.scrollin{
+    animation: scrollin linear;
+    animation-timeline: view();
+}
+
+@keyframes scrollin{
+    0%{
+        opacity: 0;
+        /* transform: scale(0.5); */
+        transform: translateY(50px);
+    }
+    20%{
+        opacity: 1;
+        /* transform: scale(1); */
+        transform: translateY(0);
+    }
+    80%{
+        opacity: 1;
+        transform: translateY(0);
+        /* transform: scale(1); */
+    }
+    100%{
+        transform: translateY(-50px);
+        opacity: 0;
+        /* transform: scale(0.5); */
+    }
+}
+
+@keyframes fadein{
+    0%{
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* .hero{
+    animation: slider 4s ease-in-out 3s;
+}
+@keyframes slider {
+    0%{
+        transform: translateX(0px);
+    }   
+    50%{
+        transform: translateX(-550.567px);
+    } 
+    100%{
+        transform: translateX(-1101.134px);
+    } 
+} */

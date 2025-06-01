@@ -8,7 +8,7 @@ import ProductItem from '../components/ProductItem'
 const collections = () => {
   const [Category, setCategory] = useState([])
   const [SubCategory, setSubCategory] = useState([])
-  const { products,Search, ShowSearch} = useContext(ShopContaxt)
+  const { products, Search, ShowSearch } = useContext(ShopContaxt)
   const [showFilter, setshowFilter] = useState(false)
   const [filterProduct, setfilterProduct] = useState([])
   const [sortType, setsortType] = useState('relavent')
@@ -16,6 +16,7 @@ const collections = () => {
   // useEffect(() => {
   //   setfilterProduct(products);
   // }, [])
+
 
   const toggleCategory = (e) => {
     if (Category.includes(e.target.value)) {
@@ -39,15 +40,15 @@ const collections = () => {
   const ApplyFilter = () => {
     let productCopy = products.slice();
 
-    if(ShowSearch && Search){
-      productCopy = productCopy.filter(item=>item.name.toLowerCase().includes(Search.toLowerCase()))
+    if (ShowSearch && Search) {
+      productCopy = productCopy.filter(item => item.name.toLowerCase().includes(Search.toLowerCase()))
     }
 
     if (Category.length > 0) {
-      productCopy = productCopy.filter(item => Category.includes(item.category))
+      productCopy = productCopy.filter(item => Category.includes(item.Category))
     }
     if (SubCategory.length > 0) {
-      productCopy = productCopy.filter(item => SubCategory.includes(item.subCategory))
+      productCopy = productCopy.filter(item => SubCategory.includes(item.SubCategory))
     }
 
 
@@ -63,7 +64,7 @@ const collections = () => {
         setfilterProduct(fpCopy.sort((a, b) => (a.price - b.price)))
         break;
       case 'high-low':
-        setfilterProduct(fpCopy.reverse((a, b) => (a.price - b.price)))
+        setfilterProduct(fpCopy.sort((a, b) => (a.price - b.price)).reverse())
         break;
       default:
         ApplyFilter();
@@ -73,11 +74,11 @@ const collections = () => {
 
   useEffect(() => {
     ApplyFilter()
-  }, [Category, SubCategory,Search,ShowSearch])
+  }, [Category, SubCategory, Search, ShowSearch, products])
 
-  useEffect(()=>{
+  useEffect(() => {
     sortProduct()
-  },[sortType])
+  }, [sortType])
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
@@ -128,7 +129,7 @@ const collections = () => {
         <div className='flex justify-between text-base sm:text-2xl mb-4'>
           <Title text1={"ALL"} text2={"COLLECTIONS"} />
           {/* Product Short */}
-          <select onChange={(e)=>setsortType(e.target.value)} className='border-2 border-gray-300 text-sm px-2'>
+          <select onChange={(e) => setsortType(e.target.value)} className='border-2 border-gray-300 text-sm px-2'>
             <option value="relavent">Sort by: Relavent</option>
             <option value="low-high">Sort by Low to High</option>
             <option value="high-low">Sort by High to Low</option>
@@ -138,10 +139,10 @@ const collections = () => {
 
 
         {/* Map Product */}
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6 fadein'>
           {
             filterProduct.map((item, index) => (
-              <ProductItem key={index} id = {item._id} image={item.image} name = {item.name} price={item.price}/>
+              <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
             ))
           }
         </div>

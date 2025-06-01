@@ -8,11 +8,14 @@ const Cart = () => {
   const { products, currency, CartItems ,updateQuantity,navigate} = useContext(ShopContaxt);
   const [CartData, setCartData] = useState([])
   useEffect(() => {
-    const tempData = [];
-    for (const items in CartItems) {
-      for (const item in CartItems[items]) {
-        if (CartItems[items][item] > 0) {
-          tempData.push({
+
+    if (products.length > 0) {
+
+      const tempData = [];
+      for (const items in CartItems) {
+        for (const item in CartItems[items]) {
+          if (CartItems[items][item] > 0) {
+            tempData.push({
             _id: items,
             size: item,
             quantity: CartItems[items][item]
@@ -21,7 +24,8 @@ const Cart = () => {
       }
     }
     setCartData(tempData)
-  }, [CartItems])
+  }
+  }, [CartItems, products])
   return (
     <div className='border-t pt-14'>
       <div className=' text-2xl mb-3'>
@@ -31,7 +35,8 @@ const Cart = () => {
         CartData.map((item, index) => {
           const productData = products.find((product) => product._id === item._id);
           return (
-            <div key={index} className='py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4'>
+            <div className='fadein'>
+            <div key={index} className='py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 scrollin'>
               <div className=' flex items-start gap-6'>
                 <img src={productData.image[0]} className='w-16 sm:w-20' alt="" />
                 <div>
@@ -45,6 +50,7 @@ const Cart = () => {
                 <input onChange={(e)=>e.target.value === ''||e.target.value === '0'? null:updateQuantity(item._id,item.size,Number(e.target.value))} type="number" className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' min={1} defaultValue={item.quantity}/>
                 <img src={assets.bin_icon} onClick={()=>updateQuantity(item._id,item.size,0)} className="w-4 mr-4 sm:w-5 cursor-pointer" alt="" />
             </div>
+            </div>
           )
         })
       }
@@ -54,7 +60,8 @@ const Cart = () => {
         <div className='w-full sm:w-[450px]'>
           <CartTotal/>
           <div className=' w-full text-end'>
-            <button onClick={()=>navigate("./place-order")} className='bg-black text-white text-sm my-8 px-8 py-3' >PROCEED TO CHECKOUT</button>
+            <button onClick={()=>CartData.length ===0?toast.info("Empty Cart"):
+ navigate("./place-order")} className='bg-black text-white text-sm my-8 px-8 py-3' >PROCEED TO CHECKOUT</button>
           </div>
         </div>
       </div>

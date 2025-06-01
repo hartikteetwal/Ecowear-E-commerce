@@ -12,8 +12,9 @@ import Collections from './pages/collections'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Verify from './pages/Verify'
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
       <Navbar/>
       <SearchBar/>
       <Routes>
-        <Route path='/Forever-E-commerce/' element={<Home/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/orders' element={<Orders/>}/>
         <Route path='/product/:productId' element={<Product/>}/>
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/collection' element={<Collections/>}/>
+        <Route path='/verify' element={<Verify/>}/>
       </Routes>
       <Footer/>
     </div>
